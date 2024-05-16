@@ -3,10 +3,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const passport = require('passport');
+const expressSession = require('express-session')({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+})
 require('dotenv') = config();
+
 //Instantiation
 const app = express();
 const port = 3009;
+
+//import Model
+const AdminRegister = require('./models/AdminRegister');
 
 //Middleware
 mongoose.connect(process.env.DATABASE, {
@@ -30,6 +40,13 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
 
+app.use(expressSession);
+app.use(passport.initialize())
+app.use(passport.session());
+
+passport.use(AdminRegister.createStrategy());
+passport.serializeUser(AdminRegister.serializeUser());
+passport.deserializeUser(AdminRegister.deserializeUser());
 //routes
 
 
