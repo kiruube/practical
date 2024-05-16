@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv') = config();
 //Instantiation
 const app = express();
@@ -20,12 +21,17 @@ mongoose.connection
     console.log(`Connection error: ${err.message}`);
 });
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 //configuration
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors());
 
 //routes
+
 
 //Invalid Routes
 app.get('*', (res,req) => {
