@@ -9,7 +9,7 @@ const expressSession = require('express-session')({
     resave: false,
     saveUninitialized: false
 })
-require('dotenv') = config();
+require('dotenv').config();
 
 //Instantiation
 const app = express();
@@ -17,6 +17,9 @@ const port = 3009;
 
 //import Model
 const AdminRegister = require('./models/AdminRegister');
+
+//Import routes
+const adminRegRoutes = require('./routes/adminRegRoutes');
 
 //Middleware
 mongoose.connect(process.env.DATABASE, {
@@ -48,7 +51,7 @@ passport.use(AdminRegister.createStrategy());
 passport.serializeUser(AdminRegister.serializeUser());
 passport.deserializeUser(AdminRegister.deserializeUser());
 //routes
-
+app.use('/', adminRegRoutes);
 
 //Invalid Routes
 app.get('*', (res,req) => {
@@ -56,4 +59,4 @@ app.get('*', (res,req) => {
 });
 
 //bootstrapping
-app.listen(port, () => console.log(`Listening on ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -23,10 +23,10 @@ const AdminRegisterSchema = new mongoose.Schema({
         type: 'string',
         trim:true
     },
-    password:{
-        type: 'string',
-        trim:true
-    }
+    // password:{
+    //     type: 'string',
+    //     trim:true
+    // }
 });
 
 AdminRegisterSchema.plugin(passportLocalMongoose, {
